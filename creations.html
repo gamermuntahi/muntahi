@@ -1,13 +1,611 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <link rel="icon" type="image/png" href="images/me.png" />
+    <link rel="stylesheet" href="css/creations.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.css"
+      integrity="sha512-fzJke8xUCPckf6D3vvPcXdIRhcRZORh0+PxSElFI6Ym6G+IiwQiCurZTu0l7tNPvHVZk0wf7tRu0+ip6h+RrVA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0; url=index.html#work" />
-    <title>Muntahi's Creations</title>
+
+    <meta
+      name="description"
+      content="Explore Muntahi's creations, projects, software, games, websites, AI projects, and experiments."
+    />
+
+    <title>Dev. Muntahi | Creations</title>
   </head>
+
   <body>
-    <p>View <a href="index.html#work">Muntahi's selected work</a>.</p>
+
+    <main class="creations-page">
+
+      <!-- =====================================
+           HEADER
+      ====================================== -->
+
+      <header class="creations-header">
+
+        <div class="header-badge">
+          <i class="fa-solid fa-cubes"></i>
+          MY CREATIONS
+        </div>
+
+        <h1>
+          Things I've
+          <span>built.</span>
+        </h1>
+
+        <p>
+          A collection of software, websites, AI experiments,
+          games, tools, and other projects I've created along
+          the way.
+        </p>
+
+      </header>
+
+
+      <!-- =====================================
+           FILTERS
+      ====================================== -->
+
+      <div class="creation-filters">
+
+        <button
+          class="filter-btn active"
+          data-filter="all"
+        >
+          All
+        </button>
+
+        <button
+          class="filter-btn"
+          data-filter="software"
+        >
+          Software
+        </button>
+
+        <button
+          class="filter-btn"
+          data-filter="web"
+        >
+          Web
+        </button>
+
+        <button
+          class="filter-btn"
+          data-filter="ai"
+        >
+          AI
+        </button>
+
+        <button
+          class="filter-btn"
+          data-filter="game"
+        >
+          Games
+        </button>
+
+        <button
+          class="filter-btn"
+          data-filter="tool"
+        >
+          Tools
+        </button>
+
+      </div>
+
+
+      <!-- =====================================
+           CREATIONS
+      ====================================== -->
+
+      <section class="creations-grid" id="creationsGrid">
+
+
+        <!-- ===================================
+             DEFFIN AI
+        ==================================== -->
+
+        <article
+          class="creation-card public ai"
+          data-title="Deffin AI"
+          data-category="AI PROJECT"
+          data-description="An AI assistant project focused on creating a useful intelligent companion with local data handling, AI APIs, automation, and personalized responses."
+          data-image="images/creations/deffin-ai.png"
+        >
+
+          <div class="creation-image">
+
+            <img
+              src="images/creations/deffin-ai.png"
+              alt="Deffin AI"
+              onerror="this.style.display='none'"
+            />
+
+            <div class="creation-placeholder">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+
+            <div class="creation-status public-badge">
+              <i class="fa-solid fa-globe"></i>
+              PUBLIC
+            </div>
+
+            <div class="creation-status private-badge">
+              <i class="fa-solid fa-lock"></i>
+              PRIVATE
+            </div>
+
+            <div class="creation-type">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+
+          </div>
+
+
+          <div class="creation-content">
+
+            <div class="creation-category">
+              AI PROJECT
+            </div>
+
+            <h2>Deffin AI</h2>
+
+            <p>
+              An AI assistant and experimentation project
+              focused on intelligent responses, local data,
+              automation, and AI integrations.
+            </p>
+
+            <div class="creation-footer">
+
+              <span class="view-project">
+                View details
+                <i class="fa-solid fa-arrow-right"></i>
+              </span>
+
+              <div class="link-icons">
+
+                <a
+                  class="link-icon"
+                  href="https://github.com/gamermuntahi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="GitHub"
+                  onclick="event.stopPropagation()"
+                >
+                  <i class="fa-brands fa-github"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ===================================
+             GMlib
+        ==================================== -->
+
+        <article
+          class="creation-card public software"
+          data-title="GMlib"
+          data-category="PYTHON LIBRARY"
+          data-description="A personal Python library containing reusable modules and utilities for development, mathematics, printing, databases, and other custom functionality."
+          data-image="images/creations/gmlib.png"
+        >
+
+          <div class="creation-image">
+
+            <img
+              src="images/creations/gmlib.png"
+              alt="GMlib"
+              onerror="this.style.display='none'"
+            />
+
+            <div class="creation-placeholder">
+              <i class="fa-brands fa-python"></i>
+            </div>
+
+            <div class="creation-status public-badge">
+              <i class="fa-solid fa-globe"></i>
+              PUBLIC
+            </div>
+
+            <div class="creation-status private-badge">
+              <i class="fa-solid fa-lock"></i>
+              PRIVATE
+            </div>
+
+            <div class="creation-type">
+              <i class="fa-brands fa-python"></i>
+            </div>
+
+          </div>
+
+
+          <div class="creation-content">
+
+            <div class="creation-category">
+              PYTHON LIBRARY
+            </div>
+
+            <h2>GMlib</h2>
+
+            <p>
+              A collection of custom Python modules and utilities
+              designed to make development faster and easier.
+            </p>
+
+            <div class="creation-footer">
+
+              <span class="view-project">
+                View details
+                <i class="fa-solid fa-arrow-right"></i>
+              </span>
+
+              <div class="link-icons">
+
+                <a
+                  class="link-icon"
+                  href="https://github.com/gamermuntahi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="GitHub"
+                  onclick="event.stopPropagation()"
+                >
+                  <i class="fa-brands fa-github"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ===================================
+             WEBSITE
+        ==================================== -->
+
+        <article
+          class="creation-card public web"
+          data-title="My Portfolio"
+          data-category="WEB DEVELOPMENT"
+          data-description="My personal developer portfolio showcasing my projects, skills, creations, technologies, and experiments in a modern responsive interface."
+          data-image="images/creations/portfolio.png"
+        >
+
+          <div class="creation-image">
+
+            <img
+              src="images/creations/portfolio.png"
+              alt="Portfolio"
+              onerror="this.style.display='none'"
+            />
+
+            <div class="creation-placeholder">
+              <i class="fa-solid fa-globe"></i>
+            </div>
+
+            <div class="creation-status public-badge">
+              <i class="fa-solid fa-globe"></i>
+              PUBLIC
+            </div>
+
+            <div class="creation-status private-badge">
+              <i class="fa-solid fa-lock"></i>
+              PRIVATE
+            </div>
+
+            <div class="creation-type">
+              <i class="fa-solid fa-globe"></i>
+            </div>
+
+          </div>
+
+
+          <div class="creation-content">
+
+            <div class="creation-category">
+              WEB DEVELOPMENT
+            </div>
+
+            <h2>My Portfolio</h2>
+
+            <p>
+              A modern personal portfolio built to showcase
+              my work, skills, projects, and creations.
+            </p>
+
+            <div class="creation-footer">
+
+              <span class="view-project">
+                View details
+                <i class="fa-solid fa-arrow-right"></i>
+              </span>
+
+              <div class="link-icons">
+
+                <a
+                  class="link-icon"
+                  href="https://github.com/gamermuntahi/MyPortfolio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="GitHub"
+                  onclick="event.stopPropagation()"
+                >
+                  <i class="fa-brands fa-github"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ===================================
+             PRIVATE GAME
+        ==================================== -->
+
+        <article
+          class="creation-card private game"
+          data-title="Secret Game Project"
+          data-category="GAME DEVELOPMENT"
+          data-description="A secret experimental game project. The project is currently private, but this page will be updated when more information becomes available."
+          data-image="images/creations/secret-game.png"
+        >
+
+          <div class="creation-image">
+
+            <img
+              src="images/creations/secret-game.png"
+              alt="Secret Game"
+              onerror="this.style.display='none'"
+            />
+
+            <div class="creation-placeholder">
+              <i class="fa-solid fa-gamepad"></i>
+            </div>
+
+            <div class="creation-status public-badge">
+              <i class="fa-solid fa-globe"></i>
+              PUBLIC
+            </div>
+
+            <div class="creation-status private-badge">
+              <i class="fa-solid fa-lock"></i>
+              PRIVATE
+            </div>
+
+            <div class="creation-type">
+              <i class="fa-solid fa-gamepad"></i>
+            </div>
+
+          </div>
+
+
+          <div class="creation-content">
+
+            <div class="creation-category">
+              GAME DEVELOPMENT
+            </div>
+
+            <h2>Secret Game Project</h2>
+
+            <p>
+              A private game project currently under
+              development.
+            </p>
+
+            <div class="creation-footer">
+
+              <span class="view-project">
+                View details
+                <i class="fa-solid fa-arrow-right"></i>
+              </span>
+
+              <div class="link-icons">
+
+                <span class="link-icon">
+                  <i class="fa-solid fa-lock"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ===================================
+             YOUTUBE PROJECT
+        ==================================== -->
+
+        <article
+          class="creation-card public tool"
+          data-title="GM's School"
+          data-category="CONTENT & EDUCATION"
+          data-description="A technology-focused content platform where I share programming, development, Minecraft, game development, and other technical content."
+          data-image="images/creations/gms.png"
+        >
+
+          <div class="creation-image">
+
+            <img
+              src="images/creations/gms.png"
+              alt="GM's School"
+              onerror="this.style.display='none'"
+            />
+
+            <div class="creation-placeholder">
+              <i class="fa-brands fa-youtube"></i>
+            </div>
+
+            <div class="creation-status public-badge">
+              <i class="fa-solid fa-globe"></i>
+              PUBLIC
+            </div>
+
+            <div class="creation-status private-badge">
+              <i class="fa-solid fa-lock"></i>
+              PRIVATE
+            </div>
+
+            <div class="creation-type">
+              <i class="fa-brands fa-youtube"></i>
+            </div>
+
+          </div>
+
+
+          <div class="creation-content">
+
+            <div class="creation-category">
+              CONTENT & EDUCATION
+            </div>
+
+            <h2>GM's School</h2>
+
+            <p>
+              My technology and programming content platform
+              covering development, games, Minecraft, and more.
+            </p>
+
+            <div class="creation-footer">
+
+              <span class="view-project">
+                View details
+                <i class="fa-solid fa-arrow-right"></i>
+              </span>
+
+              <div class="link-icons">
+
+                <a
+                  class="link-icon"
+                  href="https://www.youtube.com/@gamermuntahischool"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="YouTube"
+                  onclick="event.stopPropagation()"
+                >
+                  <i class="fa-brands fa-youtube"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- EMPTY -->
+
+        <div class="empty-state" id="emptyState">
+
+          <i class="fa-solid fa-box-open"></i>
+
+          <p>No creations found in this category.</p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =====================================
+         DESCRIPTION MODAL
+    ====================================== -->
+
+    <div
+      class="modal-overlay"
+      id="creationModal"
+      aria-hidden="true"
+    >
+
+      <div
+        class="creation-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+
+        <button
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+
+        <div class="modal-image">
+
+          <img
+            id="modalImage"
+            src=""
+            alt=""
+          />
+
+        </div>
+
+
+        <div
+          class="modal-category"
+          id="modalCategory"
+        ></div>
+
+
+        <h2 id="modalTitle"></h2>
+
+
+        <p
+          class="modal-description"
+          id="modalDescription"
+        ></p>
+
+
+        <div class="modal-links-title">
+          CONNECTED LINKS
+        </div>
+
+
+        <div
+          class="modal-links"
+          id="modalLinks"
+        ></div>
+
+      </div>
+
+    </div>
+
+      <script src="js/creations.js" defer></script>
   </body>
 </html>

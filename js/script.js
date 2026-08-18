@@ -222,4 +222,39 @@ if (moodButton) {
         icon.classList.add(moodIcons[moodIndex]);
     });
 }
+    const menu = document.querySelector(".menu");
+    const mobileButton = document.getElementById("mobileMenuButton");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (menu && mobileButton && mobileMenu) {
+        const updateMobileView = () => {
+            const isMobile = window.innerWidth <= 768;
+
+            if (isMobile) {
+                menu.style.display = "none";
+                mobileButton.style.display = "block";
+                return;
+            }
+
+            menu.style.display = "";
+            mobileButton.style.display = "none";
+            mobileMenu.classList.remove("active");
+            mobileButton.setAttribute("aria-expanded", "false");
+        };
+
+        window.addEventListener("resize", updateMobileView);
+        updateMobileView();
+
+        mobileButton.addEventListener("click", () => {
+            const isOpen = mobileMenu.classList.toggle("active");
+            mobileButton.setAttribute("aria-expanded", String(isOpen));
+        });
+
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.remove("active");
+                mobileButton.setAttribute("aria-expanded", "false");
+            });
+        });
+    }
 });
