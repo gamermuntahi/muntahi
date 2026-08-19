@@ -1,4 +1,4 @@
-﻿      /* =========================
+      /* =========================
          RESET
       ========================= */
 
@@ -936,5 +936,80 @@
           animation: none !important;
           transition: none !important;
           scroll-behavior: auto !important;
+        }
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .depth-entrance {
+          opacity: 0;
+          transform: translate3d(0, 26px, 0) scale(.98);
+          transition: opacity .7s ease, transform .7s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .depth-entrance.depth-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        .service-card,
+        .mindset-card,
+        .tech-item {
+          --tilt-x: 0deg;
+          --tilt-y: 0deg;
+          --glow-x: 50%;
+          --glow-y: 50%;
+          transform: translate3d(0, 0, 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+          transform-style: preserve-3d;
+          will-change: transform;
+        }
+
+        .service-card::after,
+        .mindset-card::after,
+        .tech-item::after {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+          content: "";
+          border-radius: inherit;
+          background: radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(37, 99, 235, .14), transparent 42%);
+          opacity: 0;
+          transition: opacity .35s ease;
+        }
+
+        .service-card.interaction-active::after,
+        .mindset-card.interaction-active::after,
+        .tech-item.interaction-active::after {
+          opacity: 1;
+        }
+
+        .service-card:hover {
+          transform: translate3d(0, -6px, 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+        }
+
+        .tech-item:hover {
+          transform: translate3d(0, -4px, 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+        }
+
+        .service-card > *,
+        .mindset-card > *,
+        .tech-item > * {
+          position: relative;
+          z-index: 1;
+          transform: translateZ(12px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+        .depth-entrance {
+          opacity: 1;
+          transform: none;
+        }
+
+        .service-card,
+        .mindset-card,
+        .tech-item {
+          transform: none;
+          will-change: auto;
         }
       }

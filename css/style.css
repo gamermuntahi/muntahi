@@ -1539,3 +1539,88 @@ footer {
     }
 }
 
+@media (hover: hover) and (pointer: fine) {
+    .project-card,
+    .skill-card,
+    .process-card {
+        --tilt-x: 0deg;
+        --tilt-y: 0deg;
+        --glow-x: 50%;
+        --glow-y: 50%;
+        transform: translate3d(0, 0, 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+        transform-style: preserve-3d;
+        will-change: transform;
+    }
+
+    .project-card::after,
+    .skill-card::after,
+    .process-card::after {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+        content: "";
+        border-radius: inherit;
+        background: radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(56, 189, 248, .18), transparent 38%);
+        opacity: 0;
+        transition: opacity .35s ease;
+    }
+
+    .project-card.interaction-active::after,
+    .skill-card.interaction-active::after,
+    .process-card.interaction-active::after {
+        opacity: 1;
+    }
+
+    .project-card .project-image img {
+        transform: translate3d(var(--image-shift-x, 0px), var(--image-shift-y, 0px), 0) scale(1.01);
+        transition: transform .5s cubic-bezier(.22, .61, .36, 1);
+    }
+
+    .project-card:hover .project-image img {
+        transform: translate3d(var(--image-shift-x, 0px), var(--image-shift-y, 0px), 0) scale(1.05);
+    }
+
+    .project-card:hover,
+    .skill-card:hover,
+    .process-card:hover {
+        transform: translate3d(0, -7px, 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    }
+
+    .btn-primary,
+    .text-link,
+    .cta-button {
+        --magnetic-x: 0px;
+        --magnetic-y: 0px;
+        transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0);
+        will-change: transform;
+    }
+
+    .depth-entrance {
+        opacity: 0;
+        transform: translate3d(0, 24px, 0) scale(.98);
+        transition: opacity .7s ease, transform .7s cubic-bezier(.22, .61, .36, 1);
+    }
+
+    .depth-entrance.depth-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+    .depth-entrance {
+        opacity: 1;
+        transform: none;
+    }
+
+    .project-card,
+    .skill-card,
+    .process-card,
+    .btn-primary,
+    .text-link,
+    .cta-button {
+        transform: none;
+        will-change: auto;
+    }
+}

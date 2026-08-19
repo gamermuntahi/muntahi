@@ -387,3 +387,45 @@
 
         }
       );
+
+      /* =====================================
+         ADDITIVE CARD DEPTH
+      ====================================== */
+
+      const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (finePointer && !reducedMotion) {
+        cards.forEach((card) => {
+          let frame = 0;
+          let pointerX = 0;
+          let pointerY = 0;
+
+          const renderTilt = () => {
+            frame = 0;
+            const rect = card.getBoundingClientRect();
+            const x = pointerX / rect.width - 0.5;
+            const y = pointerY / rect.height - 0.5;
+            card.style.setProperty("--tilt-x", `${(-y * 5).toFixed(2)}deg`);
+            card.style.setProperty("--tilt-y", `${(x * 5).toFixed(2)}deg`);
+            card.style.setProperty("--glow-x", `${(pointerX / rect.width) * 100}%`);
+            card.style.setProperty("--glow-y", `${(pointerY / rect.height) * 100}%`);
+            card.style.setProperty("--image-shift-x", `${(x * -12).toFixed(2)}px`);
+            card.style.setProperty("--image-shift-y", `${(y * -12).toFixed(2)}px`);
+          };
+
+          card.addEventListener("pointerenter", () => card.classList.add("interaction-active"), { passive: true });
+          card.addEventListener("pointermove", (event) => {
+            pointerX = event.offsetX;
+            pointerY = event.offsetY;
+            if (!frame) frame = requestAnimationFrame(renderTilt);
+          }, { passive: true });
+          card.addEventListener("pointerleave", () => {
+            card.classList.remove("interaction-active");
+            card.style.setProperty("--tilt-x", "0deg");
+            card.style.setProperty("--tilt-y", "0deg");
+            card.style.setProperty("--image-shift-x", "0px");
+            card.style.setProperty("--image-shift-y", "0px");
+          }, { passive: true });
+        });
+      }

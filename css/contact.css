@@ -1,4 +1,4 @@
-﻿      /* =========================
+      /* =========================
          RESET
       ========================= */
 
@@ -477,5 +477,61 @@
         * {
           scroll-behavior: auto !important;
           transition: none !important;
+        }
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .depth-entrance {
+          opacity: 0;
+          transform: translate3d(0, 22px, 0) scale(.98);
+          transition: opacity .65s ease, transform .65s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .depth-entrance.depth-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        .contact-card {
+          --tilt-x: 0deg;
+          --tilt-y: 0deg;
+          --glow-x: 50%;
+          --glow-y: 50%;
+          transform: translate3d(0, 0, 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+          transform-style: preserve-3d;
+          will-change: transform;
+        }
+
+        .contact-card:hover {
+          transform: translate3d(0, -7px, 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+        }
+
+        .contact-card::before {
+          left: var(--glow-x, auto);
+          top: var(--glow-y, auto);
+          transform: translate(-50%, -50%);
+        }
+
+        .contact-content,
+        .contact-icon,
+        .contact-arrow {
+          transform: translateZ(12px);
+        }
+
+        .contact-icon,
+        .contact-arrow {
+          transition: transform .3s ease, background .3s ease, color .3s ease;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+        .depth-entrance {
+          opacity: 1;
+          transform: none;
+        }
+
+        .contact-card {
+          transform: none;
+          will-change: auto;
         }
       }

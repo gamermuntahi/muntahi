@@ -222,6 +222,120 @@ if (moodButton) {
         icon.classList.add(moodIcons[moodIndex]);
     });
 }
+    /* =========================
+       6. ADDITIVE DEPTH INTERACTIONS
+    ========================= */
+
+    const canUsePointerPhysics = finePointer && !reducedMotion;
+
+    function addDepthTilt(element, options = {}) {
+        if (!canUsePointerPhysics || !element) return;
+
+        const maxTilt = options.maxTilt || 5;
+        const inner = options.inner ? element.querySelector(options.inner) : null;
+        let frame = 0;
+        let pointerX = 0;
+        let pointerY = 0;
+
+        const render = () => {
+            frame = 0;
+            const rect = element.getBoundingClientRect();
+            const x = pointerX / rect.width - 0.5;
+            const y = pointerY / rect.height - 0.5;
+            const rotateX = (-y * maxTilt).toFixed(2);
+            const rotateY = (x * maxTilt).toFixed(2);
+
+            element.style.setProperty("--tilt-x", `${rotateX}deg`);
+            element.style.setProperty("--tilt-y", `${rotateY}deg`);
+            element.style.setProperty("--glow-x", `${(pointerX / rect.width) * 100}%`);
+            element.style.setProperty("--glow-y", `${(pointerY / rect.height) * 100}%`);
+
+            if (inner) {
+                inner.style.setProperty("--image-shift-x", `${(x * -10).toFixed(2)}px`);
+                inner.style.setProperty("--image-shift-y", `${(y * -10).toFixed(2)}px`);
+            }
+        };
+
+        element.addEventListener("pointerenter", (event) => {
+            pointerX = event.offsetX;
+            pointerY = event.offsetY;
+            element.classList.add("interaction-active");
+        }, { passive: true });
+
+        element.addEventListener("pointermove", (event) => {
+            pointerX = event.offsetX;
+            pointerY = event.offsetY;
+            if (!frame) frame = requestAnimationFrame(render);
+        }, { passive: true });
+
+        element.addEventListener("pointerleave", () => {
+            element.classList.remove("interaction-active");
+            element.style.setProperty("--tilt-x", "0deg");
+            element.style.setProperty("--tilt-y", "0deg");
+            if (inner) {
+                inner.style.setProperty("--image-shift-x", "0px");
+                inner.style.setProperty("--image-shift-y", "0px");
+            }
+        }, { passive: true });
+    }
+
+    function addMagneticMotion(element, strength = 0.16) {
+        if (!canUsePointerPhysics || !element) return;
+
+        let frame = 0;
+        let targetX = 0;
+        let targetY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        const render = () => {
+            frame = 0;
+            currentX += (targetX - currentX) * 0.2;
+            currentY += (targetY - currentY) * 0.2;
+            element.style.setProperty("--magnetic-x", `${currentX.toFixed(2)}px`);
+            element.style.setProperty("--magnetic-y", `${currentY.toFixed(2)}px`);
+            if (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1) {
+                frame = requestAnimationFrame(render);
+            }
+        };
+
+        element.addEventListener("pointermove", (event) => {
+            const rect = element.getBoundingClientRect();
+            targetX = (event.clientX - rect.left - rect.width / 2) * strength;
+            targetY = (event.clientY - rect.top - rect.height / 2) * strength;
+            if (!frame) frame = requestAnimationFrame(render);
+        }, { passive: true });
+
+        element.addEventListener("pointerleave", () => {
+            targetX = 0;
+            targetY = 0;
+            if (!frame) frame = requestAnimationFrame(render);
+        }, { passive: true });
+    }
+
+    document.querySelectorAll(".project-card, .skill-card, .process-card").forEach((card) => {
+        addDepthTilt(card, { maxTilt: card.classList.contains("project-card") ? 4 : 3, inner: ".project-image img" });
+    });
+
+    document.querySelectorAll(".btn-primary, .text-link, .cta-button").forEach((button) => {
+        addMagneticMotion(button, 0.12);
+    });
+
+    if (!reducedMotion && "IntersectionObserver" in window) {
+        const entranceObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("depth-visible");
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.12, rootMargin: "0px 0px -8%" });
+
+        document.querySelectorAll(".section-label, .skills-heading, .work-heading, .statement-inner, .services-list, .process-grid, .contact-content").forEach((element) => {
+            element.classList.add("depth-entrance");
+            entranceObserver.observe(element);
+        });
+    }
+
     const menu = document.querySelector(".menu");
     const mobileButton = document.getElementById("mobileMenuButton");
     const mobileMenu = document.getElementById("mobileMenu");

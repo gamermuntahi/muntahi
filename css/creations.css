@@ -779,3 +779,50 @@
           animation: none !important;
         }
       }
+
+      @media (hover: hover) and (pointer: fine) {
+        .creation-card {
+          --tilt-x: 0deg;
+          --tilt-y: 0deg;
+          --glow-x: 50%;
+          --glow-y: 50%;
+          --card-lift: 0px;
+          transform: perspective(1000px) translate3d(0, var(--card-lift), 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+          transform-style: preserve-3d;
+          will-change: transform;
+        }
+
+        .creation-card:hover {
+          --card-lift: -7px;
+        }
+
+        .creation-card::after {
+          position: absolute;
+          inset: 0;
+          z-index: 4;
+          pointer-events: none;
+          content: "";
+          border-radius: inherit;
+          background: radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(37, 99, 235, .18), transparent 38%);
+          opacity: 0;
+          transition: opacity .35s ease;
+        }
+
+        .creation-card.interaction-active::after {
+          opacity: 1;
+        }
+
+        .creation-card .creation-image img {
+          transform: translate3d(var(--image-shift-x, 0px), var(--image-shift-y, 0px), 0) scale(1.03);
+          transition: transform .5s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .creation-card:hover .creation-image img {
+          transform: translate3d(var(--image-shift-x, 0px), var(--image-shift-y, 0px), 0) scale(1.08);
+        }
+
+        .creation-content,
+        .creation-status {
+          transform: translateZ(18px);
+        }
+      }
