@@ -1,5 +1,46 @@
-﻿      const cards =
-        document.querySelectorAll(".creation-card");
+﻿const cards =
+         document.querySelectorAll(".creation-card");
+
+      const creationImages = [
+        "images/deffen.jpg",
+        "images/fog_1.png",
+        "images/fog_2.png",
+        "images/fog_3.png",
+        "images/fog_4.png",
+        "images/fog_5.png",
+        "images/fog_7.png",
+        "images/me2.png",
+        "images/shrf.jpg",
+        "images/sun_rays.png",
+        "images/titan.png"
+      ];
+
+      function shuffleImages(images) {
+        const shuffled = [...images];
+
+        for (let index = shuffled.length - 1; index > 0; index--) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          [shuffled[index], shuffled[randomIndex]] =
+            [shuffled[randomIndex], shuffled[index]];
+        }
+
+        return shuffled;
+      }
+
+      const randomizedImages = shuffleImages(creationImages);
+
+      cards.forEach((card, index) => {
+        const image = randomizedImages[index % randomizedImages.length];
+        const imageElement = card.querySelector(".creation-image img");
+
+        card.dataset.image = image;
+
+        if (imageElement) {
+          imageElement.src = image;
+          imageElement.alt = card.dataset.title || "Creation";
+          imageElement.style.display = "block";
+        }
+      });
 
       const filterButtons =
         document.querySelectorAll(".filter-btn");
