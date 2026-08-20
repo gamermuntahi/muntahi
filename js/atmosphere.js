@@ -14,14 +14,6 @@
     root.className = "forest-atmosphere-root";
     root.setAttribute("aria-hidden", "true");
 
-    const ground = document.createElement("div");
-    ground.className = "forest-atmosphere-ground";
-    root.appendChild(ground);
-
-    const treeLine = document.createElement("div");
-    treeLine.className = "forest-atmosphere-treeline";
-    treeLine.innerHTML = '<i class="fa-solid fa-tree"></i>'.repeat(9);
-    root.appendChild(treeLine);
 
     const fogRoot = document.createElement("div");
     fogRoot.className = "cinematic-fog-root";
@@ -46,7 +38,7 @@
     root.appendChild(fogRoot);
     document.body.prepend(root);
 
-    const atmosphericLayers = [...root.querySelectorAll(".cinematic-fog-layer, .forest-atmosphere-treeline")];
+    const atmosphericLayers = [...root.querySelectorAll(".cinematic-fog-layer")];
     let pointerX = 0;
     let pointerY = 0;
     let scrollY = window.scrollY;
@@ -57,7 +49,7 @@
       const x = (pointerX / Math.max(window.innerWidth, 1) - .5);
       const y = (pointerY / Math.max(window.innerHeight, 1) - .5);
       atmosphericLayers.forEach((layer) => {
-        const depth = Number(layer.style.getPropertyValue("--fog-depth")) || (layer.classList.contains("forest-atmosphere-treeline") ? .8 : .5);
+        const depth = Number(layer.style.getPropertyValue("--fog-depth")) || .5;
         layer.style.setProperty("--atmosphere-mouse-x", `${(x * depth * 18).toFixed(2)}px`);
         layer.style.setProperty("--atmosphere-mouse-y", `${(y * depth * 8).toFixed(2)}px`);
         layer.style.setProperty("--atmosphere-scroll-y", `${(scrollY * depth * -.018).toFixed(2)}px`);
