@@ -5,6 +5,8 @@
 
     <link rel="icon" type="image/png" href="images/me.png" />
     <link rel="stylesheet" href="css/creations.css" />
+    <link rel="stylesheet" href="css/shared.css" />
+    <script src="js/site.js"></script>
 
     <link
       rel="stylesheet"
@@ -30,6 +32,19 @@
   </head>
 
   <body>
+    <nav class="navbar" aria-label="Primary navigation">
+      <div class="logo"><a href="index.html#home"><h3>Dev.<span>Muntahi</span></h3></a></div>
+      <div class="menu"><ul>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="me.html">Who am I?</a></li>
+        <li><a href="creations.html">My Work</a></li>
+        <li><a href="Contact.html">Let's Talk</a></li>
+      </ul></div>
+      <div class="nav-right">
+        <div class="availability"><span class="status-dot"></span>Available for work</div>
+        <div class="search"><button class="round" id="searchBtn" data-theme-toggle type="button" aria-label="Theme switcher"><i class="fa-regular fa-face-meh icon-hero-size" aria-hidden="true"></i></button></div>
+      </div>
+    </nav>
 
     <main class="creations-page">
 
@@ -607,5 +622,6 @@
     </div>
 
       <script src="js/creations.js" defer></script>
+      <script src="js/atmosphere.js" defer></script>
   </body>
 </html>

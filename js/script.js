@@ -151,19 +151,20 @@ document.addEventListener("DOMContentLoaded", () => {
        4. FADE-IN ANIMATIONS
     ========================= */
 
-    const fadeElements =
-        document.querySelectorAll(".fade-in");
+    const fadeElements = document.querySelectorAll(".fade-in");
 
-    if (reducedMotion) {
-        fadeElements.forEach((el) => el.classList.add("appear"));
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+        fadeElements.forEach((element) => element.classList.add("appear"));
     } else {
-        setTimeout(() => {
-            fadeElements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add("appear");
-                }, index * 120);
+        const fadeObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("appear");
+                observer.unobserve(entry.target);
             });
-        }, 100);
+        }, { threshold: 0.12, rootMargin: "0px 0px -6%" });
+
+        fadeElements.forEach((element) => fadeObserver.observe(element));
     }
 
 
@@ -254,20 +255,7 @@ if (changingText) {
     }
 }
 
-const moodButton = document.getElementById("searchBtn");
-const moodIcons = ["fa-face-meh", "fa-face-smile", "fa-face-laugh-beam"];
-let moodIndex = 0;
-
-if (moodButton) {
-    moodButton.addEventListener("click", () => {
-        const icon = moodButton.querySelector("i");
-        if (!icon) return;
-
-        icon.classList.remove(moodIcons[moodIndex]);
-        moodIndex = (moodIndex + 1) % moodIcons.length;
-        icon.classList.add(moodIcons[moodIndex]);
-    });
-}
+// Theme switching is shared by every page through js/site.js.
     /* =========================
        6. ADDITIVE DEPTH INTERACTIONS
     ========================= */
@@ -436,7 +424,19 @@ if (moodButton) {
     const miningBlocks = new Set();
     const maxMiningBlocks = 4;
     const previousPositions = { left: [], right: [] };
+    const heroSection = document.querySelector(".hero");
     let miningBlockId = 0;
+
+    const isHeroVisible = () => {
+        if (!heroSection) return false;
+        const bounds = heroSection.getBoundingClientRect();
+        return bounds.bottom > 0 && bounds.top < window.innerHeight;
+    };
+
+    const hideMiningTooltipsOverHero = () => {
+        if (!isHeroVisible()) return;
+        miningBlocks.forEach((block) => block.classList.remove("is-tooltip-visible"));
+    };
 
     const randomBetween = (minimum, maximum) =>
         Math.random() * (maximum - minimum) + minimum;
@@ -624,6 +624,7 @@ if (moodButton) {
         window.setTimeout(() => {
             if (
                 miningBlocks.has(block) &&
+                !isHeroVisible() &&
                 !block.classList.contains("is-mining") &&
                 !block.matches(":hover, :focus-visible")
             ) {
@@ -672,8 +673,11 @@ if (moodButton) {
         startMiningEasterEgg();
     }
 
+    window.addEventListener("scroll", hideMiningTooltipsOverHero, { passive: true });
+
     let miningResizeTimer = 0;
     window.addEventListener("resize", () => {
+        hideMiningTooltipsOverHero();
         window.clearTimeout(miningResizeTimer);
         miningResizeTimer = window.setTimeout(repositionMiningBlocks, 140);
     }, { passive: true });

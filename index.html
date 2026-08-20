@@ -1,9 +1,12 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="images/me.png" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="stylesheet" href="css/site-loader.css" />
+    <script src="js/site.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -16,6 +19,15 @@
       referrerpolicy="no-referrer"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (() => {
+        try {
+          if (sessionStorage.getItem("portfolio-loader-seen") === "1") {
+            document.documentElement.dataset.loaderSkip = "true";
+          }
+        } catch (_) {}
+      })();
+    </script>
     <meta
       name="description"
       content="Muntahi is a developer and creative builder working across software, web, AI, and games."
@@ -31,7 +43,7 @@
 
       <section class="site-loader__panel" aria-label="Page loading progress">
         <div class="site-loader__logo-wrap">
-          <img class="site-loader__logo" src="images/shrf.jpg" alt="SHRF" />
+          <img class="site-loader__logo" src="images/me.png" alt="SHRF" />
         </div>
         <div class="site-loader__title">Loading...</div>
         <div class="site-loader__progress-container">
@@ -46,145 +58,6 @@
       <div class="site-loader__status" id="siteLoaderStatus">Initializing SHRF</div>
     </div>
 
-    <style>
-      body.site-loader-active { overflow: hidden; }
-
-      .site-loader {
-        position: fixed;
-        inset: 0;
-        z-index: 2147483647;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        isolation: isolate;
-        color: #263241;
-        background: #edf2f7;
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 0.7s ease, visibility 0.7s ease;
-      }
-
-      .site-loader.is-complete {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-      }
-
-      .site-loader__background,
-      .site-loader__overlay,
-      .site-loader__brand { position: absolute; inset: 0; pointer-events: none; }
-
-      .site-loader__background {
-        inset: -40px;
-        background: url("images/me.png") center / cover no-repeat;
-        filter: blur(10px);
-        transform: scale(1.06);
-        opacity: 0.25;
-        z-index: -3;
-      }
-
-      .site-loader__overlay {
-        background: radial-gradient(circle at center, rgba(255,255,255,.9), rgba(238,244,249,.97));
-        z-index: -2;
-      }
-
-      .site-loader__brand {
-        inset: auto auto auto -45px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: max-content;
-        height: auto;
-        color: rgba(80, 103, 126, .16);
-        font-size: clamp(100px, 16vw, 250px);
-        font-weight: 900;
-        letter-spacing: -12px;
-        filter: blur(2px);
-        white-space: nowrap;
-        z-index: -1;
-      }
-
-      .site-loader__panel {
-        position: relative;
-        width: min(880px, 75vw);
-        min-height: 320px;
-        margin-top: 45px;
-        padding: 100px 50px 55px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255,255,255,.84);
-        border: 1px solid rgba(148,163,184,.28);
-        border-radius: 18px;
-        box-shadow: 0 30px 80px rgba(71, 85, 105, .18), inset 0 1px rgba(255,255,255,.9);
-        backdrop-filter: blur(12px);
-      }
-
-      .site-loader__logo-wrap {
-        position: absolute;
-        top: -90px;
-        left: 50%;
-        width: 145px;
-        height: 145px;
-        padding: 6px;
-        background: rgba(255,255,255,.95);
-        border: 1px solid rgba(148,163,184,.25);
-        border-radius: 18px;
-        box-shadow: 0 0 35px rgba(148,163,184,.2), 0 12px 40px rgba(71,85,105,.18);
-        animation: siteLoaderLogoFloat 3s ease-in-out infinite;
-        transform: translateX(-50%);
-      }
-
-      .site-loader__logo { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
-
-      @keyframes siteLoaderLogoFloat {
-        0%, 100% { transform: translateX(-50%) translateY(0); }
-        50% { transform: translateX(-50%) translateY(-5px); }
-      }
-
-      .site-loader__title {
-        margin-bottom: 25px;
-        color: #334155;
-        font-size: 31px;
-        font-weight: 300;
-        letter-spacing: 12px;
-        text-transform: uppercase;
-        animation: siteLoaderTextPulse 1.8s ease-in-out infinite;
-      }
-
-      @keyframes siteLoaderTextPulse { 0%,100% { opacity: .6; } 50% { opacity: 1; } }
-      .site-loader__progress-container { width: 100%; max-width: 780px; }
-      .site-loader__track { position: relative; width: 100%; height: 27px; overflow: hidden; border: 2px solid rgba(100,116,139,.25); border-radius: 8px; background: rgba(226,232,240,.65); }
-      .site-loader__bar { position: relative; width: 0%; height: 100%; border-radius: 5px; background: linear-gradient(90deg, #64748b, #cbd5e1); box-shadow: 0 0 14px rgba(100,116,139,.3); transition: width .2s ease; }
-      .site-loader__bar::after { content: ""; position: absolute; top: 0; left: -100px; width: 100px; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent); animation: siteLoaderShine 2s linear infinite; }
-      @keyframes siteLoaderShine { from { left: -100px; } to { left: 110%; } }
-      .site-loader__percentage { margin-top: 17px; color: #64748b; text-align: center; font-size: 19px; font-weight: 300; letter-spacing: 5px; }
-      .site-loader__status, .site-loader__quote { position: fixed; left: 50%; transform: translateX(-50%); white-space: nowrap; text-transform: uppercase; }
-      .site-loader__status { bottom: 40px; color: rgba(51,65,85,.62); font-size: 10px; letter-spacing: 2px; }
-      .site-loader__status::after { content: ""; display: inline-block; width: 5px; height: 5px; margin-left: 7px; border-radius: 50%; background: #64748b; animation: siteLoaderBlink 1s infinite; }
-      @keyframes siteLoaderBlink { 0%,100% { opacity: .15; } 50% { opacity: 1; } }
-      .site-loader__quote { bottom: 76px; color: rgba(51,65,85,.58); font-size: 11px; letter-spacing: 5px; }
-
-      @media (max-width: 700px) {
-        .site-loader__panel { width: 88vw; min-height: 260px; padding: 80px 25px 45px; }
-        .site-loader__logo-wrap { width: 115px; height: 115px; top: -72px; border-radius: 15px; }
-        .site-loader__title { font-size: 20px; letter-spacing: 7px; }
-        .site-loader__track { height: 21px; }
-        .site-loader__percentage { font-size: 15px; }
-        .site-loader__quote { bottom: 65px; font-size: 8px; letter-spacing: 3px; }
-        .site-loader__brand { font-size: 100px; }
-      }
-      @media (max-width: 420px) {
-        .site-loader__panel { width: 92vw; }
-        .site-loader__title { font-size: 17px; letter-spacing: 5px; }
-        .site-loader__quote { display: none; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .site-loader, .site-loader__bar { transition-duration: .01ms; }
-        .site-loader__logo-wrap, .site-loader__title, .site-loader__bar::after, .site-loader__status::after { animation: none; }
-      }
-    </style>
 
     <!-- =========================================================
      CUSTOM CURSOR
@@ -231,7 +104,8 @@
               class="round"
               id="searchBtn"
               type="button"
-              aria-label="Cycle mood icon"
+              data-theme-toggle
+              aria-label="Theme switcher"
             >
               <i
                 class="fa-regular fa-face-meh icon-hero-size"
@@ -913,9 +787,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -936,9 +810,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -959,9 +833,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -982,9 +856,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -1005,9 +879,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -1028,9 +902,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -1051,9 +925,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -1074,9 +948,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -1097,9 +971,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -1120,9 +994,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #64748b;
-                background: rgba(255, 255, 255, 0.65);
-                border: 1px solid rgba(148, 163, 184, 0.35);
+                color: var(--theme-muted);
+                background: var(--theme-overlay);
+                border: 1px solid var(--theme-border-strong);
                 border-radius: 14px;
                 text-decoration: none;
                 font-size: 19px;
@@ -1179,6 +1053,14 @@
         const status = document.getElementById("siteLoaderStatus");
         if (!loader || !progressBar || !percentage || !status) return;
 
+        if (document.documentElement.dataset.loaderSkip === "true") {
+          loader.remove();
+          document.body.classList.remove("site-loader-active");
+          return;
+        }
+
+        try { sessionStorage.setItem("portfolio-loader-seen", "1"); } catch (_) {}
+
         const stages = [
           [10, "Initializing SHRF"],
           [25, "Loading interface"],
@@ -1214,6 +1096,7 @@
       })();
     </script>
     <script src="js/script.js" defer></script>
+    <script src="js/atmosphere.js" defer></script>
   </body>
 </html>
 
