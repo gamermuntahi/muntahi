@@ -1,15 +1,57 @@
 ﻿const cards =
          document.querySelectorAll(".creation-card");
+      const root = document.documentElement;
+      const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let worldFrame = 0;
+
+      const updateWorld = () => {
+        worldFrame = 0;
+        const scrollRange = Math.max(root.scrollHeight - window.innerHeight, 1);
+        const progress = Math.min(window.scrollY / scrollRange, 1);
+        root.style.setProperty("--scroll-progress", progress.toFixed(4));
+        root.style.setProperty("--scroll-y", `${window.scrollY.toFixed(1)}px`);
+        root.style.setProperty("--ambient-x", `${((window.innerWidth * .5) - (window.innerWidth * .5))}px`);
+        root.style.setProperty("--ambient-y", `${(progress * -35).toFixed(1)}px`);
+      };
+
+      const requestWorldUpdate = () => {
+        if (!worldFrame) worldFrame = requestAnimationFrame(updateWorld);
+      };
+
+      window.addEventListener("scroll", requestWorldUpdate, { passive: true });
+      window.addEventListener("resize", requestWorldUpdate, { passive: true });
+
+      if (finePointer && !reducedMotion) {
+        window.addEventListener("pointermove", (event) => {
+          root.style.setProperty("--pointer-x", `${event.clientX}px`);
+          root.style.setProperty("--pointer-y", `${event.clientY}px`);
+          const normalizedX = event.clientX / Math.max(window.innerWidth, 1) - 0.5;
+          const normalizedY = event.clientY / Math.max(window.innerHeight, 1) - 0.5;
+          root.style.setProperty("--world-x-shift", (normalizedX * 2).toFixed(4));
+          root.style.setProperty("--world-y-shift", (normalizedY * 2).toFixed(4));
+          root.style.setProperty("--ambient-x", `${(normalizedX * 24).toFixed(1)}px`);
+          root.style.setProperty("--ambient-y", `${(normalizedY * 18).toFixed(1)}px`);
+        }, { passive: true });
+      } else {
+        root.classList.add("touch-environment");
+      }
+
+      if (reducedMotion) root.classList.add("reduced-motion");
+      requestWorldUpdate();
+
+      root.style.setProperty("--ambient-x", "0px");
+      root.style.setProperty("--ambient-y", "0px");
 
       const creationImages = [
         "images/deffen.jpg",
-        "images/fog_1.png",
-        "images/fog_2.png",
-        "images/fog_3.png",
-        "images/fog_4.png",
-        "images/fog_5.png",
-        "images/fog_7.png",
-        "images/me2.png",
+        "images/fog/fog_1.png",
+        "images/fog/fog_2.png",
+        "images/fog/fog_3.png",
+        "images/fog/fog_4.png",
+        "images/fog/fog_5.png",
+        "images/fog/fog_6.png",
+        "images/fog/fog_7.png",
         "images/shrf.jpg",
         "images/sun_rays.png",
         "images/titan.png"
@@ -100,6 +142,8 @@
 
             if (matches) {
               visible++;
+              card.classList.remove("filter-emerge");
+              requestAnimationFrame(() => card.classList.add("filter-emerge"));
             }
 
           });
@@ -221,7 +265,8 @@
 
       cards.forEach((card) => {
 
-        card.addEventListener("click", () => {
+        card.addEventListener("click", (event) => {
+          if (event.target.closest("a")) return;
 
           modalTitle.textContent =
             card.dataset.title || "Project";
@@ -392,8 +437,21 @@
          ADDITIVE CARD DEPTH
       ====================================== */
 
-      const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reducedMotion && "IntersectionObserver" in window) {
+        const entranceObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("depth-visible");
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -7%" });
+
+        document.querySelectorAll(".creations-header, .creation-filters, .creation-card").forEach((element, index) => {
+          element.classList.add("depth-entrance");
+          element.style.setProperty("--entrance-index", index);
+          entranceObserver.observe(element);
+        });
+      }
 
       if (finePointer && !reducedMotion) {
         cards.forEach((card) => {
@@ -412,6 +470,10 @@
             card.style.setProperty("--glow-y", `${(pointerY / rect.height) * 100}%`);
             card.style.setProperty("--image-shift-x", `${(x * -12).toFixed(2)}px`);
             card.style.setProperty("--image-shift-y", `${(y * -12).toFixed(2)}px`);
+            card.style.setProperty("--content-shift-x", `${(x * 4).toFixed(2)}px`);
+            card.style.setProperty("--content-shift-y", `${(y * 3).toFixed(2)}px`);
+            card.style.setProperty("--shadow-x", `${(x * -24).toFixed(2)}px`);
+            card.style.setProperty("--shadow-y", `${(y * -18 + 20).toFixed(2)}px`);
           };
 
           card.addEventListener("pointerenter", () => card.classList.add("interaction-active"), { passive: true });
@@ -426,6 +488,10 @@
             card.style.setProperty("--tilt-y", "0deg");
             card.style.setProperty("--image-shift-x", "0px");
             card.style.setProperty("--image-shift-y", "0px");
+            card.style.setProperty("--content-shift-x", "0px");
+            card.style.setProperty("--content-shift-y", "0px");
+            card.style.setProperty("--shadow-x", "0px");
+            card.style.setProperty("--shadow-y", "20px");
           }, { passive: true });
         });
       }

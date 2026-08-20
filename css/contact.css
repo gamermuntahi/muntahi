@@ -13,7 +13,9 @@
       }
 
       body {
+        position: relative;
         min-height: 100vh;
+        isolation: isolate;
 
         font-family:
           Inter,
@@ -25,17 +27,32 @@
         color: #0f172a;
 
         background:
-          radial-gradient(
-            circle at 10% 10%,
-            rgba(37, 99, 235, 0.1),
-            transparent 28%
-          ),
-          radial-gradient(
-            circle at 90% 85%,
-            rgba(14, 165, 233, 0.09),
-            transparent 30%
-          ),
+          radial-gradient(circle at calc(10% + var(--world-x-percent, 0%)) calc(10% + var(--world-y-percent, 0%)), rgba(37, 99, 235, 0.1), transparent 28%),
+          radial-gradient(circle at calc(90% - var(--world-x-percent, 0%)) calc(85% - var(--world-y-percent, 0%)), rgba(14, 165, 233, 0.09), transparent 30%),
           #f8fafc;
+      }
+
+      body::before,
+      body::after {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        content: "";
+      }
+
+      body::before {
+        z-index: -1;
+        opacity: .48;
+        background-image: linear-gradient(rgba(37, 99, 235, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 99, 235, .035) 1px, transparent 1px);
+        background-size: 78px 78px;
+        mask-image: linear-gradient(to bottom, black, transparent 78%);
+        transform: translate3d(var(--world-x-px, 0px), var(--scroll-grid-y, 0px), 0);
+      }
+
+      body::after {
+        z-index: -1;
+        background: radial-gradient(circle 240px at var(--pointer-x, 50vw) var(--pointer-y, 50vh), rgba(56, 189, 248, .13), transparent 72%);
+        mix-blend-mode: multiply;
       }
 
       a {
@@ -524,7 +541,55 @@
         }
       }
 
+      .contact-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .contact-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(56, 189, 248, .16), transparent 42%);
+        opacity: 0;
+        transition: opacity .35s ease;
+      }
+
+      .contact-card.interaction-active::after,
+      .contact-card:hover::after {
+        opacity: 1;
+      }
+
+      .contact-card .contact-arrow,
+      .contact-card i.fa-arrow-up-right-from-square {
+        transform: translate3d(var(--arrow-shift, 0px), 0, 0);
+        transition: transform .35s cubic-bezier(.22, .61, .36, 1);
+      }
+
+      .depth-entrance.reveal-0 {
+        transform: translate3d(0, 24px, 0) scale(.98);
+      }
+
+      .depth-entrance.reveal-1 {
+        transform: translate3d(-24px, 14px, 0);
+      }
+
+      .depth-entrance.reveal-2 {
+        transform: translate3d(24px, 14px, 0);
+      }
+
+      .depth-entrance.depth-visible {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
       @media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+        body::before,
+        body::after {
+          transform: none;
+          opacity: .2;
+        }
+
         .depth-entrance {
           opacity: 1;
           transform: none;

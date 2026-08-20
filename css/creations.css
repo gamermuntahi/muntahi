@@ -780,6 +780,65 @@
         }
       }
 
+      .creations-page {
+        position: relative;
+        isolation: isolate;
+      }
+
+      .creations-page::before,
+      .creations-page::after {
+        position: fixed;
+        pointer-events: none;
+        content: "";
+        z-index: -1;
+      }
+
+      .creations-page::before {
+        inset: 0;
+        background-image: linear-gradient(rgba(37, 99, 235, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 99, 235, .035) 1px, transparent 1px);
+        background-size: 80px 80px;
+        mask-image: linear-gradient(to bottom, black, transparent 80%);
+        transform: translate3d(var(--ambient-x, 0px), var(--ambient-y, 0px), 0);
+      }
+
+      .creations-page::after {
+        width: 360px;
+        height: 360px;
+        top: 8vh;
+        right: -130px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(56, 189, 248, .2), transparent 70%);
+        filter: blur(22px);
+        transform: translate3d(var(--ambient-x, 0px), var(--ambient-y, 0px), 0);
+      }
+
+      .creations-header,
+      .creation-filters,
+      .creation-card {
+        --entrance-index: 0;
+      }
+
+      .depth-entrance {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0) scale(.97);
+        transition: opacity .8s cubic-bezier(.22, .61, .36, 1), transform .8s cubic-bezier(.22, .61, .36, 1);
+        transition-delay: var(--entrance-delay, 0ms);
+      }
+
+      .depth-entrance.depth-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      .filter-emerge {
+        animation: filter-emerge .65s cubic-bezier(.22, .61, .36, 1) both;
+      }
+
+      @keyframes filter-emerge {
+        from { opacity: .35; transform: translateY(14px) scale(.985); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
       @media (hover: hover) and (pointer: fine) {
         .creation-card {
           --tilt-x: 0deg;
@@ -787,9 +846,12 @@
           --glow-x: 50%;
           --glow-y: 50%;
           --card-lift: 0px;
+          --shadow-x: 0px;
+          --shadow-y: 20px;
           transform: perspective(1000px) translate3d(0, var(--card-lift), 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
           transform-style: preserve-3d;
           will-change: transform;
+          box-shadow: var(--shadow-x) var(--shadow-y) 42px rgba(15, 23, 42, .13);
         }
 
         .creation-card:hover {
@@ -821,8 +883,38 @@
           transform: translate3d(var(--image-shift-x, 0px), var(--image-shift-y, 0px), 0) scale(1.08);
         }
 
-        .creation-content,
+        .creation-content {
+          transform: translate3d(var(--content-shift-x, 0px), var(--content-shift-y, 0px), 18px);
+          transition: transform .5s cubic-bezier(.22, .61, .36, 1);
+        }
+
         .creation-status {
-          transform: translateZ(18px);
+          transform: translateZ(28px);
+        }
+
+        .creation-card .creation-image {
+          transform: translateZ(8px);
+          transform-style: preserve-3d;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+        .creations-page::before,
+        .creations-page::after {
+          transform: none;
+        }
+
+        .depth-entrance {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+
+        .filter-emerge {
+          animation: none;
+        }
+
+        .creation-card {
+          box-shadow: 0 14px 32px rgba(15, 23, 42, .08);
         }
       }
